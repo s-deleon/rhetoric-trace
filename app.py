@@ -239,7 +239,7 @@ LANGUAGE_LEXICONS = {
         "lui", "lei", "loro"
     }
 }
-
+}
 
 # ----------------------------
 # APP HEADER
