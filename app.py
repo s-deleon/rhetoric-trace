@@ -163,23 +163,80 @@ LANGUAGE_LEXICONS = {
         # ----------------
         # RHETORICAL
         # ----------------
-        "WE": {"noi", "nostro", "nostri", "nostra"},
-        "THEY": {"loro"},
-        "NATIONALIST": {"nazione", "paese", "italia", "italiano", "popolo", "cittadini", "patria"},
-        "CRISIS": {"crisi", "minaccia", "pericolo", "guerra", "violenza", "crimine", "emergenza"},
+        "WE": {"noi", "nostro", "nostri", "nostra", "nostre", "ci"},
+        "THEY": {
+        "loro", "essi", "quelli", "questi", "altri"},
+        "NATIONALIST": {
+        "nazione", "paese", "italia", "italiano", "italiani",
+        "italiana", "popolo", "cittadini", "patria",
+        "identità", "radici", "tradizione", "cultura",
+        "famiglia", "cristiana", "cristiani", "sovranità"
+    },
+
+        "CRISIS": {
+        "crisi", "minaccia", "pericolo", "guerra",
+        "violenza", "crimine", "emergenza",
+        "declino", "decadenza", "perdita",
+        "distruzione", "invasione", "sostituzione"
+    },
+
+        "ANTAGONISM": {
+        "nemico", "nemici", "contro",
+        "attacco", "attacchi",
+        "difendere", "difesa",
+        "proteggere", "protezione",
+        "élite", "sinistra",
+        "globalisti", "globalismo",
+        "burocrati", "bruxelles",
+        "ideologia", "traditori",
+        "tradimento", "menzogna",
+        "bugia", "bugie"
+    },
+
 
         # ----------------
         # LINGUISTIC
         # ----------------
-        "NEGATION": {"non", "mai", "nessuno", "niente", "neanche", "nemmeno"},
-        "MODAL": {"deve", "devono", "dovrebbe", "posso", "può", "possono", "potrebbe", "voglio", "vuole"},
-        "CONJUNCTION": {"e", "ma", "o", "quindi", "però", "né"},
-        "SUBORDINATION": {"perché", "anche se", "mentre", "quando", "se", "poiché", "dopo", "prima", "finché"},
-        "CERTAINTY": {"sempre", "mai", "certamente", "chiaramente", "ovviamente", "sicuramente"},
+       "NEGATION": {
+        "non", "mai", "nessuno",
+        "niente", "neanche", "nemmeno"
+    },
 
-        "FIRST_PERSON": {"io", "me", "mio", "noi", "nostro"},
-        "SECOND_PERSON": {"tu", "voi", "tuo", "vostro"},
-        "THIRD_PERSON": {"lui", "lei", "loro"}
+        "MODAL": {
+        "deve", "devono", "dovrebbe",
+        "posso", "può", "possono",
+        "potrebbe", "voglio", "vuole"
+    },
+
+        "CONJUNCTION": {
+        "e", "ma", "o", "quindi",
+        "però", "né"
+    },
+
+        "SUBORDINATION": {
+        "perché", "anche se", "mentre",
+        "quando", "se", "poiché",
+        "dopo", "prima", "finché"
+    },
+
+        "CERTAINTY": {
+        "sempre", "mai", "certamente",
+        "chiaramente", "ovviamente",
+        "sicuramente"
+    },
+
+        "FIRST_PERSON": {
+        "io", "me", "mio",
+        "noi", "nostro"
+    },
+
+        "SECOND_PERSON": {
+        "tu", "voi", "tuo",
+        "vostro"
+    },
+
+         "THIRD_PERSON": {
+        "lui", "lei", "loro"
     }
 }
 
@@ -379,7 +436,11 @@ if uploaded_file is not None:
         they_count = count_word_family(tokens, lex["THEY"])
         nationalist_count = count_word_family(tokens, lex["NATIONALIST"])
         crisis_count = count_word_family(tokens, lex["CRISIS"])
-        antagonism_score = they_count + crisis_count
+        antagonism_marker_count = count_word_family(tokens, lex.get("ANTAGONISM", set())
+        )
+
+        antagonism_score = (they_count + crisis_count + antagonism_marker_count
+        )
         
         # ----------------------------
         # LINGUISTIC FEATURES
@@ -418,6 +479,7 @@ if uploaded_file is not None:
                 "they_count": they_count,
                 "nationalist_count": nationalist_count,
                 "crisis_count": crisis_count,
+                "antagonism_marker_count": antagonism_marker_count,
                 "antagonism_score": antagonism_score,
                 "word_count": word_count,
                 "avg_word_length": round(avg_len, 2),
