@@ -144,8 +144,13 @@ LANGUAGE_LEXICONS = {
         "THEY": {"they", "them", "their", "theirs"},
         "NATIONALIST": {"nation", "country", "america", "american", "people", "citizens", "homeland"},
         "CRISIS": {"crisis", "threat", "danger", "war", "violence", "crime", "disaster", "emergency"},
-        "ANTAGONISM": {"enemy", "enemies", "against", "attack", "attacks", "defend", "defense", "protect", "protection",
-        "elite", "elites", "globalists", "globalism", "bureaucrats", "corrupt", "corruption", "traitor", "traitors", "lie", "lies", "fake", "radical", "threat"
+        "ANTAGONISM": {
+         "enemy", "enemies", "against", "attack", "attacks",
+        "defend", "defense", "protect", "protection",
+        "elite", "elites", "globalists", "globalism",
+        "bureaucrats", "corrupt", "corruption",
+        "traitor", "traitors", "lie", "lies", "fake",
+        "radical", "threat"
     },
         # ----------------
         # LINGUISTIC
