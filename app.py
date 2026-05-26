@@ -719,3 +719,4 @@ if uploaded_file is not None:
     st.subheader("Top Linguistically Compressed Segments")
     top_linguistic = segment_df.sort_values(by="linguistic_compression_score", ascending=False).head(10)
     st.dataframe(top_linguistic, use_container_width=True)
+    
