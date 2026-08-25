@@ -1,5 +1,6 @@
 import streamlit as st
 import tempfile
+import os
 import librosa
 import matplotlib.pyplot as plt
 import numpy as np
@@ -288,8 +289,34 @@ if uploaded_file is not None:
         tmp.write(uploaded_file.read())
         tmp_path = tmp.name
 
-    # Load audio
-    y, sr = librosa.load(tmp_path, sr=None)
+    # ----------------------------
+    # LOAD AUDIO
+    # ----------------------------
+    try:
+        y, sr = librosa.load(tmp_path, sr=None)
+
+    except Exception as e:
+        import subprocess
+
+        st.info("Direct audio loading failed. Converting audio to WAV...")
+
+        wav_path = tmp_path + ".wav"
+
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-y",
+                "-i", tmp_path,
+                "-ac", "1",
+                "-ar", "44100",
+                wav_path,
+            ],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+        y, sr = librosa.load(wav_path, sr=None)
 
     # ----------------------------
     # ENERGY + SMOOTHING
@@ -719,4 +746,3 @@ if uploaded_file is not None:
     st.subheader("Top Linguistically Compressed Segments")
     top_linguistic = segment_df.sort_values(by="linguistic_compression_score", ascending=False).head(10)
     st.dataframe(top_linguistic, use_container_width=True)
-    
